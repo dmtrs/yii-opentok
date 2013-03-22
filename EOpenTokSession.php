@@ -19,7 +19,7 @@ class EOpenTokSession extends CComponent
      **/
     private $_createdAt; 
 
-    public function __construct($id, $partner, $createdAt)
+    public function __construct($id, $partner=null, $createdAt=null)
     {
         $this->_id        = (string)$id;
         $this->_partnerId = (string)$partner;
