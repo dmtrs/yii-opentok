@@ -5,6 +5,8 @@ Yii::import('ext.yii-opentok.EOpenTokSession');
  **/
 class EOpenTok extends CApplicationComponent
 {
+    const NAME = 'opentoksdk';
+
     /**
      * @var string api key
      **/
@@ -19,6 +21,18 @@ class EOpenTok extends CApplicationComponent
      * @var string url of the opentok service
      **/
     protected static $url = "http://api.opentok.com/hl";
+
+    /**
+     * Check for api and secret key
+     * @override
+     **/
+    public function init()
+    {
+        if($this->key===null || $this->secret===null) {
+            throw CException('OpentTok API key and secret where not provided');
+        }
+        parent::init();
+    }
 
     public function createSession($location='', $params=array())
     {
@@ -39,7 +53,7 @@ class EOpenTok extends CApplicationComponent
             $role = 'publisher';
         
         $data = array(
-            'session_id'  => $session->id,
+            'session_id'  => (($session instanceof EOpenTokSession) ? $session->id : (string)$session),
             'create_time' => time(),
             'role'        => $role,
             'nonce'       => microtime(true).mt_rand(),
