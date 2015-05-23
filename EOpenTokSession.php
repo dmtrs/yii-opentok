@@ -30,4 +30,9 @@ class EOpenTokSession extends CComponent
     {
         return $this->_id;
     }
+    
+    public function __toString()
+    {
+        return $this->_id;
+    }
 }
